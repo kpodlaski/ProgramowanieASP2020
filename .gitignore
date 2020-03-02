@@ -1,0 +1,7 @@
+.vs/
+.sln
+bin/
+obj/
+*.vcxproj*
+*.csproj*
+*.sln*
