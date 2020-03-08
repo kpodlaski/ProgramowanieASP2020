@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PostOffice.OneClerkOneQueue;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -8,8 +9,8 @@ namespace PostOffice
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Otwieramy Pocztę");
-            PostOffice po = new PostOffice();
+            //One Clerk One Queue
+            PostOffice po = new PostOffice_OCOQ();
             List<Client> clients = new List<Client>();
             List<Thread> clientsTh = new List<Thread>();
             for ( int i= 0; i<100; i++)

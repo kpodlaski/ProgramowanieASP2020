@@ -4,18 +4,11 @@ using System.Text;
 
 namespace PostOffice
 {
-    class PostOffice
+    abstract class PostOffice
     {
-        List<Clerk> allClercks;
+        protected List<Clerk> allClerks = new List<Clerk>();
 
-        public PostOffice()
-        {
-            allClercks.Add(new Clerk("A"));
-            allClercks.Add(new Clerk("B"));
-            allClercks.Add(new Clerk("C"));
-        }
-
-        public void serveMe(Client client)
+        virtual public void serveMe(Client client)
         {
             //Czekaj na swoją kolej
             //Wybor urzędnika odpowiedniego do klienta
@@ -23,9 +16,6 @@ namespace PostOffice
             c.serve(client);
         }
 
-        private Clerk nextClerk()
-        {
-            throw new NotImplementedException();
-        }
+        abstract protected Clerk nextClerk();
     }
 }

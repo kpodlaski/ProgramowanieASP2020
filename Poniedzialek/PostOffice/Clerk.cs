@@ -5,17 +5,17 @@ using System.Threading;
 
 namespace PostOffice
 {
-    class Clerk
+    abstract class Clerk
     {
         public string Name { get; set; }
         private Random rand = new Random();
        
-        public Clerk(string v)
+        public Clerk(string name)
         {
-            this.Name = v;
+            this.Name = name;
         }
 
-        public void serve(Client c)
+        virtual public void serve(Client c)
         {
             //Możemy założyć lock, kto jest monitorem ?
             Console.WriteLine("Urzędnik " + Name + " obsługuje klineta " + c);
