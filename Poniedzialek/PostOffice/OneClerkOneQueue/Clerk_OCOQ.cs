@@ -7,10 +7,11 @@ namespace PostOffice.OneClerkOneQueue
     class Clerk_OCOQ : Clerk
     {
         private volatile int queueSize = 0;
+        private String queueMonitor = "QueueMonitor";
 
         public void AddToQueue()
         {
-            lock (this)
+            lock (queueMonitor)
             {
                 queueSize++;
             }
@@ -18,7 +19,7 @@ namespace PostOffice.OneClerkOneQueue
 
         public int QueueSize()
         {
-            lock (this)
+            lock (queueMonitor)
             {
                 return queueSize;
             }

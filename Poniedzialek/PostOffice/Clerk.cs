@@ -18,7 +18,7 @@ namespace PostOffice
         virtual public void serve(Client c)
         {
             //Możemy założyć lock, kto jest monitorem ?
-            Console.WriteLine("Urzędnik " + Name + " obsługuje klineta " + c);
+            Console.WriteLine("Urzędnik " + Name + " obsługuje klienta " + c);
             // Różny czas czekania dla różnych spraw
             Thread.Sleep(rand.Next() % 500);
         }

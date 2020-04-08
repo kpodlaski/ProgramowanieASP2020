@@ -11,11 +11,12 @@ namespace PostOffice.OneQueueToAllClerks
 
         public PostOffice_OQAC() : base()
         {
-            Console.WriteLine("Otwieramy Pocztę: One Client one Queue");
+            Console.WriteLine("Otwieramy Pocztę: One Queue for all Clerks");
+            _pool = new Semaphore(3, 3);
             allClerks.Add(new Clerk_OQAC("A"));
             allClerks.Add(new Clerk_OQAC("B"));
             allClerks.Add(new Clerk_OQAC("C"));
-            _pool = new Semaphore(0, 3);
+            
         }
 
         protected override Clerk nextClerk()
@@ -26,13 +27,32 @@ namespace PostOffice.OneQueueToAllClerks
                 _pool.WaitOne();
                 lock (this)
                 {
-                    c = allClerks[0];
-
+                    if (allClerks.Count > 0)
+                    {
+                        c = allClerks[0];
+                        allClerks.Remove(c);
+                    }
+                    else
+                    {
+                        Console.WriteLine("ERROR");
+                    }
+                    
                 }
-                _pool.Release();
             }
 
              return c;
         }
+
+        public override void serveMe(Client client)
+        {
+            Clerk c = nextClerk();
+            c.serve(client);
+            lock (this)
+            {
+                allClerks.Add(c);
+            }
+            _pool.Release();
+        }
+
     }
 }

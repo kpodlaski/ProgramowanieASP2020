@@ -16,8 +16,11 @@ namespace PostOffice
         public void VisitPost()
         {
             Clerk c = postOffice.ClientArrive();
-            c.ServeClient(this);
-            Console.WriteLine("Klient " + Id + " idzie do domu");
+            lock (c)
+            {
+                c.ServeClient(this);
+                Console.WriteLine("Klient " + Id + " idzie do domu");
+            }
         }
     }
 }
