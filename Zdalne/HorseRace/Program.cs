@@ -7,7 +7,7 @@ namespace HorseRace
         static void Main(string[] args)
         {
             Console.WriteLine("Starting Race !!!");
-            Horse.SleepInterval = 0;
+            Horse.SleepInterval = 10;
             Race race = new Race(3000, 
                             new string[] { "Mornig Star", "Sprakle", "Black Storm", "Froggie", "Flopper" }, 
                             new ConsoleUI());

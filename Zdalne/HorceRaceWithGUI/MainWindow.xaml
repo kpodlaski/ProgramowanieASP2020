@@ -22,7 +22,8 @@
         <Label Name="h3Label" Content="Label" HorizontalAlignment="Left" Margin="19,190,0,0" VerticalAlignment="Top"/>
         <Label Name="h4Label" Content="Label" HorizontalAlignment="Left" Margin="19,244,0,0" VerticalAlignment="Top"/>
         <Label Name="h5Label" Content="Label" HorizontalAlignment="Left" Margin="19,302,0,0" VerticalAlignment="Top"/>
-        <Button Name="StartBtn" Content="START" HorizontalAlignment="Left" Margin="586,360,0,0" VerticalAlignment="Top" Width="88" Click="Button_Click"/>
+        <Button Name="StartBtn" Content="START" HorizontalAlignment="Left" Margin="586,360,0,0" VerticalAlignment="Top" Width="88" 
+                Click="Button_Click"/>
         <Label Content="Wyścigi Konne !!!
                " HorizontalAlignment="Left" Margin="278,48,0,0" VerticalAlignment="Top" FontWeight="Bold" FontStyle="Italic" FontSize="16" Foreground="#FFB93030"/>
 
