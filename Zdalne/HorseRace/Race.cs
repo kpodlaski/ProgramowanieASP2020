@@ -31,7 +31,7 @@ namespace HorseRace
 
 
 
-        public void StartRace()
+        public virtual void StartRace()
         {
             foreach (Horse horse in horses)
             {
@@ -39,7 +39,7 @@ namespace HorseRace
             }
         }
 
-        private void raceEnded(Barrier obj)
+        protected virtual void raceEnded(Barrier obj)
         {
             Console.WriteLine("All Horses finished, Results:");
             horses.Sort();
@@ -50,7 +50,7 @@ namespace HorseRace
             }
         }
 
-        private void racePrpared(Barrier obj)
+        protected virtual void racePrpared(Barrier obj)
         {
             ui.message("Horses are prepared, Start");
         }
