@@ -96,7 +96,7 @@ namespace HorseRaceWithQueue
                     }
                 });
                 //The number is conected with "FPS" for UI refresh rate
-                Thread.Sleep(20);
+                Thread.Sleep(30);
             }
         }
     }
