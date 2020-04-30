@@ -8,8 +8,8 @@ namespace InformationBroker.Agents
 {
     abstract class CommunicationAgent
     {
-        public readonly String agentId;
-        public readonly AgentType type;
+        public readonly String AgentId;
+        public readonly AgentType Type;
         protected readonly Broker broker;
         protected MessageFactory messageFactory;
         protected MessageQueue mq = new MessageQueue();
@@ -19,9 +19,9 @@ namespace InformationBroker.Agents
         public CommunicationAgent(Broker broker, AgentType type)
         {
             this.broker = broker;
-            this.type = type;
-            this.agentId = broker.register(this, type);
-            messageFactory = new MessageFactory(this.agentId);
+            this.Type = type;
+            this.AgentId = broker.Register(this, type);
+            messageFactory = new MessageFactory(this.AgentId);
             workingThread = new Thread(this.queueWorker);
             workingThread.Start();
         }
@@ -29,20 +29,20 @@ namespace InformationBroker.Agents
         protected abstract void queueWorker();
         protected void sendMessage(Message msg)
         {
-            broker.receiveMessage(msg);
+            broker.ReceiveMessage(msg);
         }
 
 
         public void Stop()
         {
-            broker.unregister(this);
+            broker.Unregister(this);
             closing = true;
         }
 
-        public void receiveMessage(Message msg)
+        public void ReceiveMessage(Message msg)
         {
             //Console.WriteLine("Agent {0} have message fom {1}", agentId, msg.from);
-            mq.addMessage(msg);
+            mq.AddMessage(msg);
         }
 
     }

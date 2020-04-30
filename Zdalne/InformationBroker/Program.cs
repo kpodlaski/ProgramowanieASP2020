@@ -17,27 +17,27 @@ namespace InformationBroker
             };
             Broker broker = new Broker();
             Seller seller = new Seller(broker);
-            seller.addNewProduct(books[1], 54.50, 100);
-            seller.addNewProduct(books[2], 12.80, 100);
-            seller.addNewProduct(books[3], 24.20, 100);
+            seller.AddNewProduct(books[1], 54.50, 100);
+            seller.AddNewProduct(books[2], 12.80, 100);
+            seller.AddNewProduct(books[3], 24.20, 100);
             seller = new Seller(broker);
-            seller.addNewProduct(books[1], 84.30, 100);
-            seller.addNewProduct(books[2], 12.20, 100);
-            seller.addNewProduct(books[0], 35.30, 100);
+            seller.AddNewProduct(books[1], 84.30, 100);
+            seller.AddNewProduct(books[2], 12.20, 100);
+            seller.AddNewProduct(books[0], 35.30, 100);
             seller = new Seller(broker);
-            seller.addNewProduct(books[0], 33.30, 100);
-            seller.addNewProduct(books[2], 12.20, 100);
-            seller.addNewProduct(books[3], 35.30, 100);
+            seller.AddNewProduct(books[0], 33.30, 100);
+            seller.AddNewProduct(books[2], 12.20, 100);
+            seller.AddNewProduct(books[3], 35.30, 100);
             Client[] client = new Client[] { new Client(broker), new Client(broker), new Client(broker) };
-            client[0].addProductToBuy(books[2], 7);
-            client[0].addProductToBuy(books[0], 2);
-            client[0].addProductToBuy(books[2], 3);
+            client[0].AddProductToBuy(books[2], 7);
+            client[0].AddProductToBuy(books[0], 2);
+            client[0].AddProductToBuy(books[2], 3);
 
-            client[1].addProductToBuy(books[3], 7);
-            client[1].addProductToBuy(books[2], 1);
+            client[1].AddProductToBuy(books[3], 7);
+            client[1].AddProductToBuy(books[2], 1);
 
-            client[2].addProductToBuy(books[0], 15);
-            client[2].addProductToBuy(books[1], 5);
+            client[2].AddProductToBuy(books[0], 15);
+            client[2].AddProductToBuy(books[1], 5);
 
             foreach(Client c in client)
             {

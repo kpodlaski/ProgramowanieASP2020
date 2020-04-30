@@ -9,7 +9,7 @@ namespace InformationBroker
     {
         private Queue<Message> queue = new Queue<Message>();
 
-        public void addMessage(Message msg)
+        public void AddMessage(Message msg)
         {
             lock (this)
             {
@@ -17,7 +17,7 @@ namespace InformationBroker
             }
         }
 
-        public Message peekMessage()
+        public Message PeekMessage()
         {
             Message msg = null;
             lock (this)

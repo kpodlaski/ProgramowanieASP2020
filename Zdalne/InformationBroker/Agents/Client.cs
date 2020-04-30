@@ -9,10 +9,10 @@ namespace InformationBroker.Agents
 {
     class Client : CommunicationAgent
     {
-        List<Product> buyed = new List<Product>();
-        Dictionary<ProductInfo, int> toBuy = new Dictionary<ProductInfo, int>();
+        private List<Product> buyed = new List<Product>();
+        private Dictionary<ProductInfo, int> toBuy = new Dictionary<ProductInfo, int>();
         //List<SellRequestMessage> sellreq = new List<SellRequestMessage>();
-        Dictionary<ProductInfo, List<OfferAnswerMessage>> offers = new Dictionary<ProductInfo, List<OfferAnswerMessage>>();
+        private Dictionary<ProductInfo, List<OfferAnswerMessage>> offers = new Dictionary<ProductInfo, List<OfferAnswerMessage>>();
 
         public Client(Broker broker) : base(broker, AgentType.Client) { }
 
@@ -20,13 +20,13 @@ namespace InformationBroker.Agents
         {
             while (!this.closing || mq.Count() > 0)
             {
-                Message msg = mq.peekMessage();
+                Message msg = mq.PeekMessage();
                 if (msg == null)
                 {
                     Thread.Sleep(10);
                     continue;
                 }
-                switch (msg.type)
+                switch (msg.Type)
                 {
                     case MessageType.OfferAnswer: newOfferAnswer((OfferAnswerMessage)msg); break;
                     case MessageType.SellConfirm: newSellConfirm((SellConfirmMessage)msg); break;
@@ -40,11 +40,11 @@ namespace InformationBroker.Agents
         {
             if (packageWasExpected(msg))
             {
-                Product p = msg.product;
+                Product p = msg.ProductInfo;
                 lock (buyed)
                 {
                     buyed.Add(p);
-                    Console.WriteLine("Client {0} bought {1}, for {2}$ and {3} copies", agentId, p.info, p.unitPrice, p.quantity);
+                    Console.WriteLine("Client {0} bought {1}, for {2}$ and {3} copies", AgentId, p.Info, p.UnitPrice, p.Quantity);
                 }
             }
         }
@@ -63,18 +63,18 @@ namespace InformationBroker.Agents
 
         private void newOfferAnswer(OfferAnswerMessage msg)
         {
-            Console.WriteLine("Agent {0}, has offer {1}, {2}, {3}", agentId, msg.product, msg.price, msg.quantityAviable);
+            Console.WriteLine("Agent {0}, has offer {1}, {2}, {3}", AgentId, msg.ProductInfo, msg.Price, msg.QuantityAviable);
             lock (offers)
             {
-                if (!offers.ContainsKey(msg.product))
+                if (!offers.ContainsKey(msg.ProductInfo))
                 {
-                    offers[msg.product] = new List<OfferAnswerMessage>();
+                    offers[msg.ProductInfo] = new List<OfferAnswerMessage>();
                 }
-                offers[msg.product].Add(msg);
+                offers[msg.ProductInfo].Add(msg);
             }
         }
 
-        public void addProductToBuy(ProductInfo p, int quantity)
+        public void AddProductToBuy(ProductInfo p, int quantity)
         {
             lock (toBuy)
             {
@@ -89,8 +89,8 @@ namespace InformationBroker.Agents
         {
             foreach(ProductInfo product in toBuy.Keys)
             {
-                Message msg = messageFactory.buildOfferRequest(product);
-                Console.WriteLine("Agent {0} send request for {1}", agentId, product);
+                Message msg = messageFactory.BuildOfferRequest(product);
+                Console.WriteLine("Agent {0} send request for {1}", AgentId, product);
                 sendMessage(msg);
                 //Lambda in loop cannot use loop variable like product, it have to be iteration scope variable.
                 ProductInfo _product = product;
@@ -107,10 +107,10 @@ namespace InformationBroker.Agents
                         offers.Remove(_product);
                     }
                     if (_offers == null || _offers.Count == 0) return;
-                    _offers.Sort((o1, o2) => { return Math.Sign(o1.price - o2.price); } );
+                    _offers.Sort((o1, o2) => { return Math.Sign(o1.Price - o2.Price); } );
                     OfferAnswerMessage offer = _offers[0];
                     //We should check the quantity ;-)
-                    Message sellReq = messageFactory.buildSellRequest(offer, quantity);
+                    Message sellReq = messageFactory.BuildSellRequest(offer, quantity);
                     sendMessage(sellReq);
                 });
                 t.Start();

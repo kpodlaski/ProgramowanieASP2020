@@ -16,34 +16,34 @@ namespace InformationBroker.Messages
             this.myId = agentId;
         }
 
-        public Message buildOfferRequest(ProductInfo product)
+        public Message BuildOfferRequest(ProductInfo product)
         {
             return new OfferRequestMessage(myId, null, product);
         }
 
-        public Message readressOfferRequest(OfferRequestMessage initialMessage, String to)
+        public Message ReadressOfferRequest(OfferRequestMessage initialMessage, String to)
         {
-            return new OfferRequestMessage(initialMessage.from, to, initialMessage.product);
+            return new OfferRequestMessage(initialMessage.From, to, initialMessage.ProductInfo);
         }
 
-        public Message buildOfferAnswer(OfferRequestMessage initial, double price, int aviableQuantity)
+        public Message BuildOfferAnswer(OfferRequestMessage initial, double price, int aviableQuantity)
         {
-            return new OfferAnswerMessage(myId, initial.from, initial.product, price, aviableQuantity);
+            return new OfferAnswerMessage(myId, initial.From, initial.ProductInfo, price, aviableQuantity);
         }
 
-        public Message buildSellRequest(OfferAnswerMessage initial, int requestedQuantity)
+        public Message BuildSellRequest(OfferAnswerMessage initial, int requestedQuantity)
         {
-            return new SellRequestMessage(myId, initial.from, initial.product, requestedQuantity);
+            return new SellRequestMessage(myId, initial.From, initial.ProductInfo, requestedQuantity);
         }
 
-        public Message buildSellConfirmation(SellRequestMessage initial, String transaction_id, int quantity, double unitPrice )
+        public Message BuildSellConfirmation(SellRequestMessage initial, String transaction_id, int quantity, double unitPrice )
         {
-            return new SellConfirmMessage(myId, initial.from, initial.product, transaction_id, quantity, unitPrice);
+            return new SellConfirmMessage(myId, initial.From, initial.ProductInfo, transaction_id, quantity, unitPrice);
         }
 
-        public Message sendProduct(SellConfirmMessage confirm, Product product)
+        public Message SendProduct(SellConfirmMessage confirm, Product product)
         {
-            return new ProductMessage(myId, confirm.to, product, confirm.transaction_id);
+            return new ProductMessage(myId, confirm.To, product, confirm.Transaction_id);
         }
     }
 }

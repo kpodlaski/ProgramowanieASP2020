@@ -7,13 +7,13 @@ namespace InformationBroker.Messages
 {
     class SellRequestMessage : Message
     {
-        public readonly ProductInfo product;
-        public readonly int quantity;
+        public readonly ProductInfo ProductInfo;
+        public readonly int Quantity;
 
         public SellRequestMessage(String from, String to, ProductInfo product, int quantity) : base(from, to, MessageType.SellRequest)
         {
-            this.product = product;
-            this.quantity = quantity;
+            this.ProductInfo = product;
+            this.Quantity = quantity;
         }
     }
 }

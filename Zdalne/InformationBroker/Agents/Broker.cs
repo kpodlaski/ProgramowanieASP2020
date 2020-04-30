@@ -25,14 +25,14 @@ namespace InformationBroker.Agents
         }
 
        
-        public void receiveMessage(Message msg)
+        public void ReceiveMessage(Message msg)
         {
-            Console.WriteLine("Broker have msg {0}, from {1}, to {2}", msg.GetType(), msg.from, msg.to);
-            mq.addMessage(msg);
+            Console.WriteLine("Broker have msg {0}, from {1}, to {2}", msg.GetType(), msg.From, msg.To);
+            mq.AddMessage(msg);
 
         }
 
-        public string register(CommunicationAgent communicationAgent, AgentType type)
+        public string Register(CommunicationAgent communicationAgent, AgentType type)
         {
             Console.WriteLine("Register ", type.ToString());
             String agentId = null;
@@ -48,12 +48,12 @@ namespace InformationBroker.Agents
             return agentId;
         }
 
-        public void unregister(CommunicationAgent communicationAgent)
+        public void Unregister(CommunicationAgent communicationAgent)
         {
-            Console.WriteLine("Unregister ", communicationAgent.agentId);
+            Console.WriteLine("Unregister ", communicationAgent.AgentId);
             lock (agents)
             {
-                agents.Remove(communicationAgent.agentId);
+                agents.Remove(communicationAgent.AgentId);
             }
         }
 
@@ -61,13 +61,13 @@ namespace InformationBroker.Agents
         {
             while (true)
             {
-                Message msg = mq.peekMessage();
+                Message msg = mq.PeekMessage();
                 if (msg == null)
                 {
                     Thread.Sleep(10);
                     continue;
                 }
-                switch (msg.type)
+                switch (msg.Type)
                 {
                     case MessageType.OfferRequest: sendOfferToSellers( (OfferRequestMessage) msg); break;
                     default: sendMessage(msg); break;
@@ -83,9 +83,9 @@ namespace InformationBroker.Agents
             {
                 foreach (CommunicationAgent cA in agents.Values)
                 {
-                    if (cA.type != AgentType.Seller) continue;
-                    _msg = messageFactory.readressOfferRequest(msg, cA.agentId);
-                    cA.receiveMessage(_msg);
+                    if (cA.Type != AgentType.Seller) continue;
+                    _msg = messageFactory.ReadressOfferRequest(msg, cA.AgentId);
+                    cA.ReceiveMessage(_msg);
                 }
             }
         }
@@ -95,8 +95,8 @@ namespace InformationBroker.Agents
 
             lock (agents)
             {
-                CommunicationAgent a = agents[msg.to];
-                a.receiveMessage(msg);
+                CommunicationAgent a = agents[msg.To];
+                a.ReceiveMessage(msg);
             }
         }
     }

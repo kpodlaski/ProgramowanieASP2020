@@ -8,14 +8,14 @@ namespace InformationBroker.Messages
     class OfferAnswerMessage : Message
     {
 
-        public readonly ProductInfo product;
-        public readonly double price;
-        public readonly int quantityAviable;
+        public readonly ProductInfo ProductInfo;
+        public readonly double Price;
+        public readonly int QuantityAviable;
         public OfferAnswerMessage(String from, String to, ProductInfo product, double price, int quantityAviable) : base(from, to, MessageType.OfferAnswer)
         {
-            this.product = product;
-            this.price = price;
-            this.quantityAviable = quantityAviable;
+            this.ProductInfo = product;
+            this.Price = price;
+            this.QuantityAviable = quantityAviable;
         }
     }
 }

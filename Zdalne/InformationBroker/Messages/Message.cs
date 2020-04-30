@@ -6,15 +6,15 @@ namespace InformationBroker.Messages
 {
     class Message
     {
-        public readonly String from;
-        public readonly String to;
-        public readonly MessageType type;
+        public readonly String From;
+        public readonly String To;
+        public readonly MessageType Type;
 
         protected Message(String from, String to, MessageType type)
         {
-            this.from = from;
-            this.to = to;
-            this.type = type;
+            this.From = from;
+            this.To = to;
+            this.Type = type;
         }
     }
 }

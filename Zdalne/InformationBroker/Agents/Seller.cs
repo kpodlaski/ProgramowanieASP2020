@@ -20,13 +20,13 @@ namespace InformationBroker.Agents
         {
             while(!this.closing || mq.Count() > 0)
             {
-                Message msg = mq.peekMessage();
+                Message msg = mq.PeekMessage();
                 if (msg == null)
                 {
                     Thread.Sleep(10);
                     continue;
                 }
-                switch (msg.type)
+                switch (msg.Type)
                 {
                     case MessageType.OfferRequest: newOfferRequest( (OfferRequestMessage) msg); break;
                     case MessageType.SellRequest: newSellRequest((SellRequestMessage) msg); break;
@@ -40,13 +40,13 @@ namespace InformationBroker.Agents
             Product p = null;
             lock (aviableProductsMap)
             {
-                if (aviableProductsMap.ContainsKey(msg.product)){
-                    p = aviableProductsMap[msg.product];
+                if (aviableProductsMap.ContainsKey(msg.ProductInfo)){
+                    p = aviableProductsMap[msg.ProductInfo];
                 }
                 else return;
             }
             if (p == null) return;
-            Message reply = messageFactory.buildOfferAnswer(msg, p.unitPrice, p.quantity);
+            Message reply = messageFactory.BuildOfferAnswer(msg, p.UnitPrice, p.Quantity);
             sendMessage(reply);
         }
 
@@ -56,13 +56,13 @@ namespace InformationBroker.Agents
             int quantity;
             lock (aviableProductsMap)
             {
-                if (aviableProductsMap.ContainsKey(msg.product)){
-                    p = aviableProductsMap[msg.product];
-                    quantity = Math.Min(p.quantity, msg.quantity);
-                    p.quantity -= quantity;
-                    if (p.quantity == 0)
+                if (aviableProductsMap.ContainsKey(msg.ProductInfo)){
+                    p = aviableProductsMap[msg.ProductInfo];
+                    quantity = Math.Min(p.Quantity, msg.Quantity);
+                    p.Quantity -= quantity;
+                    if (p.Quantity == 0)
                     {
-                        aviableProductsMap.Remove(p.info);
+                        aviableProductsMap.Remove(p.Info);
                     }
                 }
                 else return;
@@ -70,15 +70,15 @@ namespace InformationBroker.Agents
             if (p == null) return;
 
             Product product = new Product(p, quantity);
-            Message reply = messageFactory.buildSellConfirmation(msg, agentId + "_" + tid, product.quantity, product.unitPrice);
+            Message reply = messageFactory.BuildSellConfirmation(msg, AgentId + "_" + tid, product.Quantity, product.UnitPrice);
             sendMessage(reply);
             tid++;
-            reply = messageFactory.sendProduct((SellConfirmMessage) reply, product);
+            reply = messageFactory.SendProduct((SellConfirmMessage) reply, product);
             sendMessage(reply);
-            Console.WriteLine("Seller {0} sold {1}, for {2}$ and {3} copies", agentId, product.info, product.unitPrice, product.quantity);
+            Console.WriteLine("Seller {0} sold {1}, for {2}$ and {3} copies", AgentId, product.Info, product.UnitPrice, product.Quantity);
         }
 
-        public void addNewProduct(ProductInfo product, double price, int quantity)
+        public void AddNewProduct(ProductInfo product, double price, int quantity)
         {
             lock (aviableProductsMap)
             {
@@ -87,8 +87,8 @@ namespace InformationBroker.Agents
                     aviableProductsMap[product] = new Product(product, price, quantity);
                 }
                 else {
-                    aviableProductsMap[product].unitPrice = price;
-                    aviableProductsMap[product].quantity += quantity;
+                    aviableProductsMap[product].UnitPrice = price;
+                    aviableProductsMap[product].Quantity += quantity;
                 }
             }
         }

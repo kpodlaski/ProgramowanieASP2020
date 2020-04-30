@@ -7,13 +7,13 @@ namespace InformationBroker.Messages
 {
     class ProductMessage : Message
     {
-        public readonly Product product;
-        public readonly String transaction_id;
+        public readonly Product ProductInfo;
+        public readonly String Transaction_id;
 
         public ProductMessage(String from, String to, Product product, String transaction_id) : base(from, to, MessageType.Product)
         {
-            this.product = product;
-            this.transaction_id = transaction_id;
+            this.ProductInfo = product;
+            this.Transaction_id = transaction_id;
         }
     }
 }

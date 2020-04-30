@@ -9,7 +9,7 @@ namespace InformationBroker.Agents
 
     interface ICommunicationAgent
     {
-        public void receiveMessage(Message msg);
+        public void ReceiveMessage(Message msg);
     }
 
 }
